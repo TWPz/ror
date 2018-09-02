@@ -1,0 +1,42 @@
+<% if false %>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @post.text %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+<% end %>
+
+
+
+<h1><%= @post.title %></h1>
+<%= @post.text %>
+<p>
+  <%= link_to "Return", posts_path  %>
+  <%= link_to "Edit", edit_post_path(@post) %>
+  <%= link_to "Delete", @post, :method => :delete, data:{confirm: "Sure you wanna delete me?"} %>
+</p>
+
+<h2>Comment</h2>
+
+<% @post.comments.each do |comment| %>
+<p><%= comment.text %></p>
+<p><%= time_ago_in_words comment.created_at %> ago.</p>
+<p><%= link_to "delete the comment", [@post, comment], :method =>:delete, data:{confirm: "unpolite!"} %></p>
+<% end %>
+
+
+
+
+<%= form_for [@post, @post.comments.build] do |f| %>
+<p><%= f.text_area :text, :size => '70x5'%></p>
+<p><%= f.submit "submit the comment!" %></p>
+<% end %>
